@@ -24,4 +24,11 @@ int int main()
   counter= (double *) shmat(shmid,NULL, 0);
   *counter=0.0;
   return 0;
+  //Hacemos que el padre espere a que finalicen los hijos
+  for(int i=0;i<CHILDREN;i++)
+  {
+    pid_t pid=wait(&status);
+    printf("Child %d ha terminado con el status %d \n",pid, WEXITSTATUS(status));
+  }
+      fprintf(stdout, "Counter: %f\n", *counter);
 }
