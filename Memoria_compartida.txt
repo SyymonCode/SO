@@ -21,7 +21,7 @@ if(!fork())
 func();
 }
 El hijo llama a la funcion
- ------------------------------------------------------------------>PASOS QUE NECESITAMOS PARA USAR LA MEMORIA<-------------------------------------------------------------------
+ -------------------------------------------------------->PASOS QUE NECESITAMOS PARA USAR LA MEMORIA<-------------------------------------------------------------------
 
 1) Generar la clave -> ftox();
 2) Reservar la memoria compartida.
@@ -29,13 +29,14 @@ El hijo llama a la funcion
 4) Operar en memoria compartida.
 5) Liberar memoria compartida.
 6) Eliminar memoria compartida
------------------------------------------------------------>int shmid = shmget(key, sizeof(double), IPC_CREAT | 0700);<-----------------------------------------------------------
+------------------------------------------------>int shmid = shmget(key, sizeof(double), IPC_CREAT | 0700);<-----------------------------------------------------------
 
 1)key=clave.
 2)sizeof(double)=cantidad de memoria que queremos reservar.
 3)IPC_CREAT=crea la memoria compartida si no existe ya.
--------------------------------------------------------------double *counter= (double *) shmat(shmid,NULL,0);---------------------------------------------------------------------
+---------------------------------------------------------double *counter= (double *) shmat(shmid,NULL,0);---------------------------------------------------------------------
 
 Crea un puntero a la zona de memoria compartida
 -shmdt(pointer)--->libera el puntero
 -sgmd---->elimina la memoria
+-wait---->Devuelve el id del ultimo hijo que se ejecuta.
