@@ -10,25 +10,28 @@
 #define CHILDREN 3
 
 
-int int main()
+int main()
 {
-  int i, shmid;
+  int i, shmid, status;
   key_t key;
-  double *counter;
+  int *ptr;
 
   //Creamos la memoria compartida
-  key=ftok("practica1.c",1);
-  if((shmid= shmget(key,sizeof(double),IPC_CREAT | 0777))==-1)
+  key=ftok("E1P1.c",3);
+  if((shmid= shmget(key,100*sizeof(int),IPC_CREAT | 0777))==-1)
   exit(1);
-  //Dirigimos el puntero hacia la memoria
-  counter= (double *) shmat(shmid,NULL, 0);
-  *counter=0.0;
-  return 0;
-  //Hacemos que el padre espere a que finalicen los hijos
-  for(int i=0;i<CHILDREN;i++)
+  ptr=(int*)shmat(shmid,NULL,0);
+
+
+  for (i = 0; i < 3; i++)
   {
-    pid_t pid=wait(&status);
-    printf("Child %d ha terminado con el status %d \n",pid, WEXITSTATUS(status));
+      if (!fork())
+        {
+          if(i=0){}
+
+        }
   }
+
       fprintf(stdout, "Counter: %f\n", *counter);
 }
+/
