@@ -1,0 +1,42 @@
+--------------------------------------------------------------------------PRACTICA 1 DE SO----------------------------------------------------------------------------------------
+
+                                                                        *MEMORIA COMPARTIDA*
+
+Memoria entre procesos:
+
+-fork()=Dos procesos independientes, uno original llamado proceso padre y el originado llamado hijo, a mas llamadas a fork mas procesos hijos.
+-Estos procesos hijos son copias del padre.
+-Memoria compartida basada en claves. Para la memoria compartida necesitamos asignar una clave a cada copia.
+
+-IPC=Inter Process Communication. Tiene 3 funcionalidades, memoria compartida, semaforos y paso de mensajes.
+-SMH=Incluye las funciones necesarias para reservar la memoria.
+
+-fotx()=Nos permite generar una clave que vincular a esa memoria compartida.
+
+-key_t key = ftok("shmemory.c", 1); shmemory.c es el archivo que esta guardado
+
+-Para distinguir entre procesos hijo y padre, usamos :
+if(!fork())
+{
+func();
+}
+El hijo llama a la funcion
+ -------------------------------------------------------->PASOS QUE NECESITAMOS PARA USAR LA MEMORIA<-------------------------------------------------------------------
+
+1) Generar la clave -> ftox();
+2) Reservar la memoria compartida.
+3) Direccionar un puntero a la memoria compartida.
+4) Operar en memoria compartida.
+5) Liberar memoria compartida.
+6) Eliminar memoria compartida
+------------------------------------------------>int shmid = shmget(key, sizeof(double), IPC_CREAT | 0700);<-----------------------------------------------------------
+
+1)key=clave.
+2)sizeof(double)=cantidad de memoria que queremos reservar.
+3)IPC_CREAT=crea la memoria compartida si no existe ya.
+---------------------------------------------------------double *counter= (double *) shmat(shmid,NULL,0);---------------------------------------------------------------------
+
+Crea un puntero a la zona de memoria compartida
+-shmdt(pointer)--->libera el puntero
+-sgmd---->elimina la memoria
+-wait---->Devuelve el id del ultimo hijo que se ejecuta.
