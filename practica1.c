@@ -25,6 +25,12 @@ int main()
   exit(1);
   //Dirigimos el puntero hacia la memoria
 ptr= (int *) shmat(shmid,NULL,0);
+//Rellenamos el vector por el proceso padre
+printf("El padre rellena el vector\n");
+for(int i=0; i<100; i++)
+{
+  ptr[i]=rand()%MAX;
+}
 //Primer Hijo
 if(!fork())
   {
@@ -64,7 +70,7 @@ if (!fork())
         sumatorio=sumatorio+ptr[j];
       }
       printf("La suma del vector es %d\n",sumatorio );
-      //sleep(30);
+      sleep(30);
     }
     exit(0);
   }
@@ -74,6 +80,8 @@ if (!fork())
     pid_t pid = wait(&status);
     printf("\nChild %d finished with status %d\n", pid, WEXITSTATUS(status));
   }
+
+
   fprintf(stdout, "vector: %i\n",*ptr );
   shmdt(ptr);
   shmctl(shmid,IPC_RMID,&buf);
